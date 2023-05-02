@@ -6,14 +6,14 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 
-# Function importing Dataset
+# Importing Dataset
 def importdata():
     balance_data = pd.read_csv(
         'https://archive.ics.uci.edu/ml/machine-learning-' +
         'databases/balance-scale/balance-scale.data',
         sep=',', header=None)
 
-    # Printing the dataswet shape
+    # Printing the dataset shape
     print("Dataset Length: ", len(balance_data))
     print("Dataset Shape: ", balance_data.shape)
 
@@ -22,7 +22,7 @@ def importdata():
     return balance_data
 
 
-# Function to split the dataset
+# Splitting the dataset
 def splitdataset(balance_data):
     # Separating the target variable
     X = balance_data.values[:, 1:5]
@@ -35,7 +35,7 @@ def splitdataset(balance_data):
     return X, Y, X_train, X_test, y_train, y_test
 
 
-# Function to perform training with giniIndex.
+# Performing training with giniIndex.
 def train_using_gini(X_train, X_test, y_train):
     # Creating the classifier object
     clf_gini = DecisionTreeClassifier(criterion="gini",
@@ -46,7 +46,7 @@ def train_using_gini(X_train, X_test, y_train):
     return clf_gini
 
 
-# Function to perform training with entropy.
+# Performing training with entropy.
 def train_using_entropy(X_train, X_test, y_train):
     # Decision tree with entropy
     clf_entropy = DecisionTreeClassifier(
@@ -58,7 +58,7 @@ def train_using_entropy(X_train, X_test, y_train):
     return clf_entropy
 
 
-# Function to make predictions
+# Making predictions
 def prediction(X_test, clf_object):
     # Predicton on test with giniIndex
     y_pred = clf_object.predict(X_test)
@@ -67,7 +67,7 @@ def prediction(X_test, clf_object):
     return y_pred
 
 
-# Function to calculate accuracy
+# Calculate accuracy
 def cal_accuracy(y_test, y_pred):
     print("Confusion Matrix: ",
           confusion_matrix(y_test, y_pred))
@@ -79,23 +79,23 @@ def cal_accuracy(y_test, y_pred):
           classification_report(y_test, y_pred))
 
 
-# Driver code
+# Main Function
 def main():
-    # Building Phase
+    # Training models
     data = importdata()
     X, Y, X_train, X_test, y_train, y_test = splitdataset(data)
     clf_gini = train_using_gini(X_train, X_test, y_train)
     clf_entropy = train_using_entropy(X_train, X_test, y_train)
-
-    # Operational Phase
-    print("Results Using Gini Index:")
-
+    
+    
     # Prediction using gini
+    print("Results Using Gini Index:")  
     y_pred_gini = prediction(X_test, clf_gini)
     cal_accuracy(y_test, y_pred_gini)
 
-    print("Results Using Entropy:")
+    
     # Prediction using entropy
+    print("Results Using Entropy:")
     y_pred_entropy = prediction(X_test, clf_entropy)
     cal_accuracy(y_test, y_pred_entropy)
 
